@@ -1,0 +1,12 @@
+build:
+  python_version: "3.7"
+  gpu: false
+  python_packages:
+    - tensorflow-addons==0.10.0
+    - Ipython==7.16.1
+    - TensorflowTTS==1.6.1
+    - git+https://github.com/repodiac/german_transliterate
+  system_packages:
+    - "ffmpeg"
+    - "espeak"
+predict: "predict.py:TTS"
