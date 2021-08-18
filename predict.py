@@ -26,10 +26,10 @@ class TTS(cog.Predictor):
         self.processor = AutoProcessor.from_pretrained("tensorspeech/tts-fastspeech2-ljspeech-en")
 
     @cog.input("input", type=str, help="String to be converted to speech audio")
-    @cog.input("speaker_ids", type=int, default=[0])
-    @cog.input("speed_ratios", type=float, default=[1.0])
-    @cog.input("f0_ratios", type=float, default=[1.0])
-    @cog.input("energy_ratios", type=float, default=[1.0])
+    @cog.input("speaker_ids", type=int, default=0)
+    @cog.input("speed_ratios", type=float, default=1.0)
+    @cog.input("f0_ratios", type=float, default=1.0)
+    @cog.input("energy_ratios", type=float, default=1.0)
 
     def predict(self, input, speaker_ids, speed_ratios, f0_ratios, energy_ratios):
         """Compute TTS on input string"""
@@ -38,11 +38,11 @@ class TTS(cog.Predictor):
 
         # fastspeech inference
         mel_before, mel_after, duration_outputs, _, _ = self.fastspeech2.inference(
-            input_ids=tf.expand_dims(tf.convert_to_tensor(input_ids, dtype=tf.int32), 0),
-            speaker_ids=tf.convert_to_tensor(speaker_ids, dtype=tf.int32),
-            speed_ratios=tf.convert_to_tensor(speed_ratios, dtype=tf.float32),
-            f0_ratios =tf.convert_to_tensor(f0_ratios, dtype=tf.float32),
-            energy_ratios =tf.convert_to_tensor(energy_ratios, dtype=tf.float32),
+            input_ids=tf.expand_dims(tf.convert_to_tensor([input_id], dtype=tf.int32), 0),
+            speaker_ids=tf.convert_to_tensor([speaker_id], dtype=tf.int32),
+            speed_ratios=tf.convert_to_tensor([speed_ratio], dtype=tf.float32),
+            f0_ratios =tf.convert_to_tensor([f0_ratio], dtype=tf.float32),
+            energy_ratios =tf.convert_to_tensor([energy_ratio], dtype=tf.float32),
         )
 
         # melgan inference
