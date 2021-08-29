@@ -53,7 +53,6 @@ class TTS(cog.Predictor):
         audio_after = self.mb_melgan.inference(mel_after)[0, :, 0]
 
         # save to file
-        output_path = Path("output").mkdir(parents=True, exist_ok=True)
         out_path = Path(tempfile.mkdtemp()) / "output.wav"
         sf.write(str(out_path), audio_after, 22050, "PCM_16")
 
